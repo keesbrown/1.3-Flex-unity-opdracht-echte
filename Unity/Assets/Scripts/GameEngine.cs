@@ -13,7 +13,8 @@ public class GameEngine : MonoBehaviour
     private Tower tower;
     private Enemy enemy;
     private GameObject[] path;
-     
+
+    private int currentPathIndex = 0;
 
     void Start()
     {
@@ -80,8 +81,8 @@ public class GameEngine : MonoBehaviour
             return;
         }
 
-        GameObject from = path[0];
-        GameObject to = path[1];
+        GameObject from = path[enemy.from];
+        GameObject to = path[enemy.to];
 
 
         float dx = to.transform.position.x - from.transform.position.x;
@@ -92,13 +93,16 @@ public class GameEngine : MonoBehaviour
         
         enemy.obj.transform.position += new Vector3(dx, dy, dz) * Time.deltaTime;
 
-        double dist = ;
+        double dist = GetDist(enemy.obj, to);
         Debug.Log(dist);
 
         if (dist <= 0.01)
         {
             Debug.Log("goto next!");
+            enemy.from++;
+            enemy.to++;
             enemy.obj.transform.position = to.transform.position;
+            
         }
     }
 
